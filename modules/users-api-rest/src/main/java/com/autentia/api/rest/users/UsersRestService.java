@@ -14,8 +14,8 @@ import java.util.Set;
 
 @ApplicationPath("/users")
 @Component(
-		immediate = true, property = {"jaxrs.application=true"},
-		service = Application.class
+	immediate = true, property = {"jaxrs.application=true"},
+	service = Application.class
 )
 public class UsersRestService extends Application {
 
@@ -28,7 +28,7 @@ public class UsersRestService extends Application {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUsers() {
-		String json = "{\n" + "  \"value\": \"cool\"\n" + "}";
+		String json = "{\n" + "  \"value\": \"ok\"\n" + "}";
 		return Response
 				.status(200)
 				.header("Access-Control-Allow-Origin", "*")
