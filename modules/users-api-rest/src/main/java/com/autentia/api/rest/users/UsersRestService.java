@@ -1,8 +1,6 @@
 package com.autentia.api.rest.users;
 
-import com.liferay.portal.kernel.service.UserLocalService;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.GET;
@@ -37,8 +35,4 @@ public class UsersRestService extends Application {
 				.entity(json)
 				.build();
 	}
-
-	@Reference
-	private volatile UserLocalService _userLocalService;
-
 }
