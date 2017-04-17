@@ -28,10 +28,9 @@ public class UsersRestService extends Application {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUsers() {
-		String json = "{\n" + "  \"value\": \"ok\"\n" + "}";
+		String json = "{\n" + " \"value\": \"ok\"\n" + "}";
 		return Response
 				.status(200)
-				.header("Access-Control-Allow-Origin", "*")
 				.entity(json)
 				.build();
 	}
