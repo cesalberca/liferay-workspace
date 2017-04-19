@@ -32,9 +32,10 @@ public class UsersRestService extends Application {
 	}
 
 	@POST
+	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response postUser() {
-		String json = "{\n" + " \"value\": \"ok\"\n" + "}";
+	public Response getUser(@PathParam("id") String id) {
+		String json = "{\n" + " \"value\": \"" + id + "\"\n" + "}";
 		return Response
 				.status(201)
 				.entity(json)
