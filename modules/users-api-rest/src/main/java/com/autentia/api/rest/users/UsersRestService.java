@@ -1,5 +1,8 @@
 package com.autentia.api.rest.users;
 
+import com.google.common.collect.ImmutableSet;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import org.osgi.service.component.annotations.Component;
 
 import javax.ws.rs.*;
@@ -16,6 +19,7 @@ import java.util.Set;
 	service = Application.class
 )
 public class UsersRestService extends Application {
+	private static Log _log = LogFactoryUtil.getLog(UsersRestService.class);
 
 	@Override
 	public Set<Object> getSingletons() {
@@ -24,7 +28,14 @@ public class UsersRestService extends Application {
 
 	@GET
 	public Response getUsers() {
+		_log.info("User made a get request");
 		String json = "{\n" + " \"value\": \"ok\"\n" + "}";
+		ImmutableSet<String> COLOR_NAMES = ImmutableSet.of(
+			"red",
+			"orange"
+		);
+		_log.info("Size " + COLOR_NAMES.size());
+
 		return Response
 				.status(200)
 				.entity(json)
@@ -41,4 +52,22 @@ public class UsersRestService extends Application {
 				.entity(json)
 				.build();
 	}
+
+//	@POST
+//	@Path("/files")
+//	@Produces(MediaType.MULTIPART_FORM_DATA)
+//	public Response uploadFile() {
+//		Attachment attachment = new Attachment();
+//		String filename = attachment.getContentDisposition().getParameter("filename");
+//		java.nio.file.Path path = Paths.get("/Users/calberca/Tmp" + filename);
+//		Files.deleteIfExists(path);
+//		InputStream in = attachment.getObject(InputStream.class);
+//
+//		Files.copy(in, path);
+//
+//		return Response
+//				.status(203)
+//				.entity("file created ")
+//				.build();
+//	}
 }
