@@ -14,6 +14,7 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @ApplicationPath("/users")
@@ -48,5 +49,15 @@ public class ApiRestUsersApplication extends Application {
                     .entity("{\"error\": \""+ e.getMessage() + "\"}")
                     .build();
         }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsers() {
+        final List<User> users = userLocalService.getUsers(-1, -1);
+        final String json = JSONFactoryUtil.looseSerialize(users);
+        return Response.status(200)
+                .entity(json)
+                .build();
     }
 }
