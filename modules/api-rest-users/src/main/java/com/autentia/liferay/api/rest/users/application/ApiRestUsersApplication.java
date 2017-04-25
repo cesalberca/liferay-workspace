@@ -21,6 +21,10 @@ import java.util.Set;
 public class ApiRestUsersApplication extends Application {
 
 	private static Log _log = LogFactoryUtil.getLog(ApiRestUsersApplication.class);
+
+	@Reference
+	private volatile UserLocalService userLocalService;
+
 	public Set<Object> getSingletons() {
 		return Collections.singleton(this);
 	}
@@ -37,13 +41,8 @@ public class ApiRestUsersApplication extends Application {
 					.entity(json)
 					.build();
 		} catch (PortalException e) {
-            _log.info(e.toString());
-			return Response.status(404)
-					.entity("{\"error\": \""+ e.getMessage() + "\"}")
-					.build();
+			_log.info(e.toString());
+			throw new NotFoundException();
 		}
 	}
-
-	@Reference
-	private volatile UserLocalService userLocalService;
 }
