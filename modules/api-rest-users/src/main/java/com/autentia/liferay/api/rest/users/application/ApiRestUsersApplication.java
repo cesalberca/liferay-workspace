@@ -12,6 +12,7 @@ import org.osgi.service.component.annotations.Reference;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Collections;
 import java.util.Set;
 
@@ -27,16 +28,20 @@ public class ApiRestUsersApplication extends Application {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getUser(@PathParam("id") Long id) {
+	public Response getUser(@PathParam("id") Long id) {
 		try {
 			// 20164L
 			User user = userLocalService.getUser(id);
 			String json = JSONFactoryUtil.looseSerialize(user);
-			return json;
+			return Response.status(200)
+					.entity(json)
+					.build();
 		} catch (PortalException e) {
             _log.info(e.toString());
+			return Response.status(404)
+					.entity("{\"error\": \""+ e.getMessage() + "\"}")
+					.build();
 		}
-		return "Hi";
 	}
 
 	@Reference
