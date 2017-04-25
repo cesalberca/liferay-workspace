@@ -20,29 +20,33 @@ import java.util.Set;
 @Component(immediate = true, service = Application.class)
 public class ApiRestUsersApplication extends Application {
 
-	private static Log _log = LogFactoryUtil.getLog(ApiRestUsersApplication.class);
+    private static final Log log = LogFactoryUtil.getLog(ApiRestUsersApplication.class);
 
-	@Reference
-	private volatile UserLocalService userLocalService;
+    @Reference
+    private volatile UserLocalService userLocalService;
 
-	public Set<Object> getSingletons() {
-		return Collections.singleton(this);
-	}
+    @Override
+    public Set<Object> getSingletons() {
+        super.getSingletons();
+        return Collections.singleton(this);
+    }
 
-	@GET
-	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getUser(@PathParam("id") Long id) {
-		try {
-			// 20164L
-			User user = userLocalService.getUser(id);
-			String json = JSONFactoryUtil.looseSerialize(user);
-			return Response.status(200)
-					.entity(json)
-					.build();
-		} catch (PortalException e) {
-			_log.info(e.toString());
-			throw new NotFoundException();
-		}
-	}
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUser(@PathParam("id") Long id) {
+        try {
+            // 20164L
+            final User user = userLocalService.getUser(id);
+            final String json = JSONFactoryUtil.looseSerialize(user);
+            return Response.status(200)
+                    .entity(json)
+                    .build();
+        } catch (PortalException e) {
+            log.info(e.toString());
+            return Response.status(404)
+                    .entity("{\"error\": \""+ e.getMessage() + "\"}")
+                    .build();
+        }
+    }
 }
