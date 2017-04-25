@@ -1,0 +1,2 @@
+contextPath=/api-rest-users
+authVerifierProperties=auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=*

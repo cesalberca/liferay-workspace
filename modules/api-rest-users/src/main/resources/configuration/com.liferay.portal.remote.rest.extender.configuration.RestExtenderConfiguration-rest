@@ -1,0 +1,2 @@
+contextPaths=/api-rest-users
+jaxRsServiceFilterStrings=(component.name=com.autentia.liferay.api.rest.users.application.ApiRestUsersApplication)
