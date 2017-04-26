@@ -44,16 +44,13 @@ public class ApiRestUsersApplication extends Application {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("id") Long id) {
         try {
-            // 20164L
             final User user = userLocalService.getUser(id);
             final String json = JSONFactoryUtil.looseSerialize(user);
             return Response.status(Status.OK)
                     .entity(json)
                     .build();
-        } catch (PortalException e) {
-            log.info(e.toString());
-            return Response.status(404)
-                    .entity("{\"error\": \"" + e.getMessage() + "\"}")
+        } catch (PortalException ignored) {
+            return Response.status(Status.NOT_FOUND)
                     .build();
         }
     }
@@ -63,22 +60,14 @@ public class ApiRestUsersApplication extends Application {
     public Response getUsers() {
         final List<User> users = userLocalService.getUsers(-1, -1);
         final String json = JSONFactoryUtil.looseSerialize(users);
-        return Response.status(200)
+        return Response.status(Status.OK)
                 .entity(json)
                 .build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postUser(@QueryParam("email") String email) throws NoSuchAlgorithmException {
-        log.info("Made post request");
-
-        try {
-            userLocalService.deleteUser(31783L);
-        } catch (PortalException e) {
-            log.info(e.getMessage());
-        }
-
+    public Response postUser() throws NoSuchAlgorithmException {
         final User user = createTestUser();
         userLocalService.addUser(user);
 
@@ -112,5 +101,19 @@ public class ApiRestUsersApplication extends Application {
         user.setMiddleName("Manuel" + random);
 
         return user;
+    }
+
+    @DELETE
+    @Path("{id}")
+    public Response deleteUser(@PathParam("id") Long id) {
+        try {
+            final User user = userLocalService.deleteUser(id);
+            return Response.status(Status.OK)
+                    .entity(JSONFactoryUtil.looseSerialize(user))
+                    .build();
+        } catch (PortalException ignored) {
+            return Response.status(Status.NOT_FOUND)
+                    .build();
+        }
     }
 }
