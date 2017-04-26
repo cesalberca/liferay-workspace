@@ -1,53 +1,45 @@
 package com.autentia.liferay.api.rest.files.application;
 
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
 import java.util.Collections;
 import java.util.Set;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Application;
-
-import org.osgi.service.component.annotations.Component;
-
-@ApplicationPath("/greetings")
+@ApplicationPath("/files")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Component(immediate = true, service = Application.class)
 public class FileUploaderApplication extends Application {
 
-	public Set<Object> getSingletons() {
-		return Collections.<Object>singleton(this);
-	}
+    private static final Log log = LogFactoryUtil.getLog(FileUploaderApplication.class);
 
-	@GET
-	@Produces("text/plain")
-	public String working() {
-		return "It works!";
-	}
+    @Reference
+    private volatile DLAppServiceUtil dlAppServiceUtil;
 
-	@GET
-	@Path("/morning")
-	@Produces("text/plain")
-	public String hello() {
-		return "Good morning!";
-	}
+    public Set<Object> getSingletons() {
+        return Collections.singleton(this);
+    }
 
-	@GET
-	@Path("/morning/{name}")
-	@Produces("text/plain")
-	public String morning(
-		@PathParam("name") String name,
-		@QueryParam("drink") String drink) {
+    @POST
+    public String postFile() {
+        try {
+            DLAppServiceUtil.addFileEntry(0, 0, "Testing", "ASCII", "Test", "Testing description", null, "LOL".getBytes(), null);
+        } catch (PortalException e) {
+            log.info(e.getMessage());
+        }
+        return "Test";
+    }
 
-		String greeting = "Good Morning " + name;
-
-		if (drink != null) {
-			greeting += ". Would you like some " + drink + "?";
-		}
-
-		return greeting;
-	}
-
+    @GET
+    public String test() {
+        return "test";
+    }
 }
