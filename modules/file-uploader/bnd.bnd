@@ -1,0 +1,5 @@
+Bundle-Name: file-uploader
+Bundle-SymbolicName: com.autentia.liferay.api.rest.files
+Bundle-Version: 1.0.0
+ConfigurationPath: /configuration
+Include-Resource: configuration=src/main/resources/configuration

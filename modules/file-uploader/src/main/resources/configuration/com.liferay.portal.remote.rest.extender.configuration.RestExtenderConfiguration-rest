@@ -1,0 +1,2 @@
+contextPaths=/file-uploader
+jaxRsServiceFilterStrings=(component.name=com.autentia.liferay.api.rest.files.application.FileUploaderApplication)

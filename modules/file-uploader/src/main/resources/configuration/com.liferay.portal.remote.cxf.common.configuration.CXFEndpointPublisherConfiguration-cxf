@@ -1,0 +1,2 @@
+contextPath=/file-uploader
+authVerifierProperties=auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=*
