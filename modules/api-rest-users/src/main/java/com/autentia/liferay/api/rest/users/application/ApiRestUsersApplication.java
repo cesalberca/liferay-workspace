@@ -6,7 +6,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.UserUtil;
 import org.osgi.service.component.annotations.Component;
@@ -25,7 +24,9 @@ import java.util.List;
 import java.util.Set;
 
 @ApplicationPath("/users")
+@Produces(MediaType.APPLICATION_JSON)
 @Component(immediate = true, service = Application.class)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ApiRestUsersApplication extends Application {
 
     private static final Log log = LogFactoryUtil.getLog(ApiRestUsersApplication.class);
@@ -41,7 +42,6 @@ public class ApiRestUsersApplication extends Application {
 
     @GET
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("id") Long id) {
         try {
             final User user = userLocalService.getUser(id);
@@ -56,7 +56,6 @@ public class ApiRestUsersApplication extends Application {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
         final List<User> users = userLocalService.getUsers(-1, -1);
         final String json = JSONFactoryUtil.looseSerialize(users);
@@ -66,8 +65,6 @@ public class ApiRestUsersApplication extends Application {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response postUser() throws NoSuchAlgorithmException {
         final User user = createTestUser();
         userLocalService.addUser(user);
