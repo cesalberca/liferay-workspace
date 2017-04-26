@@ -66,6 +66,7 @@ public class ApiRestUsersApplication extends Application {
     }
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postUser() throws NoSuchAlgorithmException {
         final User user = createTestUser();
