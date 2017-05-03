@@ -1,6 +1,6 @@
 package com.autentia.liferay.api.rest.files.application;
 
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,7 +29,7 @@ import java.util.Set;
 public class FileUploaderApplication extends Application {
 
     @Reference
-    private volatile DLFileEntryLocalServiceUtil dlFileEntryLocalService;
+    private volatile DLFileEntryLocalService dlFileEntryLocalService;
 
     private static final Log log = LogFactoryUtil.getLog(FileUploaderApplication.class);
 
@@ -44,19 +44,19 @@ public class FileUploaderApplication extends Application {
         final File file = new File("/Users/calberca/Desktop/port_v2.png");
         try (InputStream in = new FileInputStream(file)) {
             final Map<String, DDMFormValues> fieldsMap = new HashMap<>();
-            fieldsMap.put("test", new DDMFormValues(new DDMForm()));
+            fieldsMap.put("test2", new DDMFormValues(new DDMForm()));
             log.info(file.getName());
             log.info(file.getTotalSpace());
 
             //https://web.liferay.com/community/forums/-/message_boards/message/17070585
-            DLFileEntryLocalServiceUtil.addFileEntry(
+            dlFileEntryLocalService.addFileEntry(
                     20164,
                     20147,
                     20147,
                     30302,
-                    "test",
+                    "test2",
                     "ASCII",
-                    "Test",
+                    "Test 2",
                     "Testing description",
                     "changelog",
                     0,
@@ -68,11 +68,11 @@ public class FileUploaderApplication extends Application {
             );
             in.close();
         } catch (FileNotFoundException e) {
-            log.info("xxx1 " + e.getMessage());
+            log.info("xxx1 " + e);
         } catch (IOException e) {
-            log.info("xxx2 " + e.getMessage());
+            log.info("xxx2 " + e);
         } catch (PortalException e) {
-            log.info("xxx3 " + e.getMessage());
+            log.info("xxx3 " + e);
         }
 
         return "ok";
