@@ -1,12 +1,14 @@
 package com.autentia.liferay.api.rest.files.application;
 
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations .Reference;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Consumes;
@@ -27,27 +29,30 @@ import java.util.Set;
 public class FileUploaderApplication extends Application {
 
     @Reference
-    private volatile DLFileEntryLocalService dlFileEntryLocalService;
+    private volatile DLFileEntryLocalServiceUtil dlFileEntryLocalService;
 
     private static final Log log = LogFactoryUtil.getLog(FileUploaderApplication.class);
 
+    @Override
     public Set<Object> getSingletons() {
+        super.getSingletons();
         return Collections.singleton(this);
     }
 
     @POST
     public String postFile() {
-        try {
-            File file = new File("/Users/calberca/Desktop/port_v2.png");
-            try (InputStream in = new FileInputStream(file)) {
-                final Map<String, DDMFormValues> fieldsMap = new HashMap<>();
-                log.info(file.getName());
-                log.info(file.getTotalSpace());
+        final File file = new File("/Users/calberca/Desktop/port_v2.png");
+        try (InputStream in = new FileInputStream(file)) {
+            final Map<String, DDMFormValues> fieldsMap = new HashMap<>();
+            fieldsMap.put("test", new DDMFormValues(new DDMForm()));
+            log.info(file.getName());
+            log.info(file.getTotalSpace());
 
-            dlFileEntryLocalService.addFileEntry(
+            //https://web.liferay.com/community/forums/-/message_boards/message/17070585
+            DLFileEntryLocalServiceUtil.addFileEntry(
                     20164,
                     20147,
-                    0,
+                    20147,
                     30302,
                     "test",
                     "ASCII",
@@ -59,17 +64,17 @@ public class FileUploaderApplication extends Application {
                     file,
                     in,
                     file.getTotalSpace(),
-                    null
+                    new ServiceContext()
             );
-                in.close();
-            }
-        } catch (PortalException e) {
-            log.info("xx1 Portal Exception ");
+            in.close();
         } catch (FileNotFoundException e) {
-            log.info("xx2 FileNotFound Exception ");
+            log.info("xxx1 " + e.getMessage());
         } catch (IOException e) {
-            log.info("xx3 IO Exception");
+            log.info("xxx2 " + e.getMessage());
+        } catch (PortalException e) {
+            log.info("xxx3 " + e.getMessage());
         }
+
         return "ok";
     }
 }
