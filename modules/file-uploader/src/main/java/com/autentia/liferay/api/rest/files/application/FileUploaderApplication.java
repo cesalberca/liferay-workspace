@@ -1,25 +1,21 @@
 package com.autentia.liferay.api.rest.files.application;
 
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.dynamic.data.mapping.kernel.DDMForm;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import java.io.*;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 @ApplicationPath("/files")
@@ -40,13 +36,10 @@ public class FileUploaderApplication extends Application {
     }
 
     @POST
-    public String postFile() {
+    public Response postFile(@QueryParam("title") String title, @QueryParam("description") String description) {
         final File file = new File("/Users/calberca/Desktop/port_v2.png");
-        try (InputStream in = new FileInputStream(file)) {
-            final Map<String, DDMFormValues> fieldsMap = new HashMap<>();
-            fieldsMap.put("test2", new DDMFormValues(new DDMForm()));
+        try (InputStream inputStream = new FileInputStream(file)) {
             log.info(file.getName());
-            log.info(file.getTotalSpace());
 
             //https://web.liferay.com/community/forums/-/message_boards/message/17070585
             dlFileEntryLocalService.addFileEntry(
@@ -54,27 +47,30 @@ public class FileUploaderApplication extends Application {
                     20147,
                     20147,
                     30302,
-                    "test2",
-                    "ASCII",
-                    "Test 2",
-                    "Testing description",
-                    "changelog",
+                    file.getName(),
+                    MimeTypesUtil.getContentType(file),
+                    title,
+                    description,
+                    null,
                     0,
-                    fieldsMap,
+                    null,
                     file,
-                    in,
-                    file.getTotalSpace(),
+                    inputStream,
+                    file.length(),
                     new ServiceContext()
             );
-            in.close();
+            inputStream.close();
         } catch (FileNotFoundException e) {
             log.info("xxx1 " + e);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         } catch (IOException e) {
             log.info("xxx2 " + e);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         } catch (PortalException e) {
             log.info("xxx3 " + e);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
 
-        return "ok";
+        return Response.status(Status.CREATED).build();
     }
 }
