@@ -3,3 +3,10 @@ Bundle-SymbolicName: com.autentia.liferay.api.rest.files
 Bundle-Version: 1.0.0
 ConfigurationPath: /configuration
 Include-Resource: configuration=src/main/resources/configuration
+Import-Package:\
+    !org.junit,\
+	!org.junit.*,\
+	\
+	!org.slf4j,\
+	!org.slf4j.*,\
+	*
