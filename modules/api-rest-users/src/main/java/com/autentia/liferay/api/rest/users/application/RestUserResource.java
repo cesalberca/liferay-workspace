@@ -15,14 +15,10 @@ public class RestUserResource {
     @Reference
     private UserLocalService userLocalService;
 
-    private List<RestUser> getRestUsers() {
-        final List<User> users = userLocalService.getUsers(-1, -1);
-        return users.stream().map(RestUser::toRestUser).collect(Collectors.toList());
-    }
-
     @GET
     public List<RestUser> getUsers() {
-        return getRestUsers();
+        final List<User> users = userLocalService.getUsers(-1, -1);
+        return users.stream().map(RestUser::toRestUser).collect(Collectors.toList());
     }
 
 }
