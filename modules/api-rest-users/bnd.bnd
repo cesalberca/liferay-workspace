@@ -1,4 +1,4 @@
-Bundle-Name: api-rest-users
+Bundle-Name: rest-users
 Bundle-SymbolicName: com.autentia.liferay.api.rest.users
 Bundle-Version: 1.0.0
 ConfigurationPath: /configuration
