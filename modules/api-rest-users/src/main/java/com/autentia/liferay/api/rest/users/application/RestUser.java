@@ -7,6 +7,9 @@ public class RestUser {
     private String name;
     private String lastname;
 
+    public RestUser() {
+    }
+
     RestUser(String name, String lastname) {
         this.name = name;
         this.lastname = lastname;

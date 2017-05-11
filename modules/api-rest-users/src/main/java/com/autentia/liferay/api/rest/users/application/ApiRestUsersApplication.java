@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @ApplicationPath("/users")
-@Consumes(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_XML)
 @Component(immediate = true, service = Application.class)
 public class ApiRestUsersApplication extends Application {
 
