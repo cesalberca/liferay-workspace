@@ -1,12 +1,12 @@
 package com.autentia.liferay.api.rest.users.application;
 
+import org.osgi.service.component.annotations.Component;
+
 import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import java.util.List;
 
-
-@Path("/users")
-public class RestResource {
+@Component(immediate = true, service = RestUserResource.class)
+public class RestUserResource {
 
     private final RestUserService restUserService = RestUserService.getInstance();
 
