@@ -18,7 +18,7 @@ public class RestUserResource {
     @GET
     public List<RestUser> getUsers() {
         final List<User> users = userLocalService.getUsers(-1, -1);
-        return users.stream().map(RestUser::toRestUser).collect(Collectors.toList());
+        return users.stream().map(RestUser::new).collect(Collectors.toList());
     }
 
 }

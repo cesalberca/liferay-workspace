@@ -13,7 +13,7 @@ public class RestUser {
     public RestUser() {
     }
 
-    private RestUser(User user) {
+    public RestUser(User user) {
         name = user.getFirstName();
         lastname = user.getLastName();
     }
@@ -32,10 +32,6 @@ public class RestUser {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    static RestUser toRestUser(User user) {
-        return new RestUser(user);
     }
 
 }
