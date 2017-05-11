@@ -1,7 +1,5 @@
 package com.autentia.liferay.api.rest.users.application;
 
-import com.liferay.portal.kernel.model.User;
-
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -12,21 +10,22 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-//@Provider
-public class UserMessageBodyWriter implements MessageBodyWriter<User> {
+@Provider
+public class UserMessageBodyWriter implements MessageBodyWriter<RestUser> {
 
     @Override
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-        return User.class.isAssignableFrom(type);
+//        return RestUser.class.isAssignableFrom(type);
+        return true;
     }
 
     @Override
-    public long getSize(User user, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+    public long getSize(RestUser user, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
         return -1;
     }
 
     @Override
-    public void writeTo(User user, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) throws IOException, WebApplicationException {
+    public void writeTo(RestUser user, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) throws IOException, WebApplicationException {
         entityStream.write("hi".getBytes());
     }
 }
