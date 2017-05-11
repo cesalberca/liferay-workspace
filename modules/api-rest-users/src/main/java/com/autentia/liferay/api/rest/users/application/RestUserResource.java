@@ -1,18 +1,28 @@
 package com.autentia.liferay.api.rest.users.application;
 
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.GET;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component(immediate = true, service = RestUserResource.class)
 public class RestUserResource {
 
-    private final RestUserService restUserService = RestUserService.getInstance();
+    @Reference
+    private UserLocalService userLocalService;
+
+    private List<RestUser> getRestUsers() {
+        final List<User> users = userLocalService.getUsers(-1, -1);
+        return users.stream().map(RestUser::toRestUser).collect(Collectors.toList());
+    }
 
     @GET
     public List<RestUser> getUsers() {
-        return restUserService.getRestUsers();
+        return getRestUsers();
     }
 
 }

@@ -1,18 +1,21 @@
 package com.autentia.liferay.api.rest.users.application;
 
+import com.liferay.portal.kernel.model.User;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class RestUser {
+
     private String name;
     private String lastname;
 
     public RestUser() {
     }
 
-    RestUser(String name, String lastname) {
-        this.name = name;
-        this.lastname = lastname;
+    private RestUser(User user) {
+        name = user.getFirstName();
+        lastname = user.getLastName();
     }
 
     public String getName() {
@@ -30,4 +33,9 @@ public class RestUser {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
+    static RestUser toRestUser(User user) {
+        return new RestUser(user);
+    }
+
 }
