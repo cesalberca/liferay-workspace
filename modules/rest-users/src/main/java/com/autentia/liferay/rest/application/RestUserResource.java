@@ -7,6 +7,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.List;
@@ -26,8 +27,12 @@ public class RestUserResource {
 
     @GET
     @Path("{id}")
-    public RestUser getUser(@PathParam("id") long id) throws PortalException {
-        return new RestUser(userLocalService.getUserById(id));
+    public RestUser getUser(@PathParam("id") long id) {
+        try {
+            return new RestUser(userLocalService.getUserById(id));
+        } catch (PortalException e) {
+            throw new NotFoundException(e);
+        }
     }
 
 }

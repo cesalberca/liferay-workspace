@@ -4,14 +4,14 @@ import com.liferay.portal.kernel.model.User;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement // Permite parsear nuestra entidad a XML o JSON según el Content-Type de la petición
+@XmlRootElement // Permite parsear nuestra entidad a XML o JSON según el Accept de la petición
 public class RestUser {
 
     private long id;
     private String name;
     private String lastname;
 
-    // Importante tener un constructor público vacío para que CXF Apache pueda hacer las intancias correctamente
+    // Importante tener un constructor público vacío para que CXF Apache pueda hacer las instancias correctamente
     public RestUser() {
     }
 
