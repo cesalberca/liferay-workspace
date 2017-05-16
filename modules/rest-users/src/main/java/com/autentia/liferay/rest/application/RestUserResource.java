@@ -90,4 +90,18 @@ public class RestUserResource {
         }
     }
 
+    @PUT
+    @Path("{id}")
+    public RestUser putUser(@PathParam("id") long id, RestUser restUser) {
+        try {
+            final User user = userLocalService.getUserById(id);
+            user.setFirstName(restUser.getFirstname());
+            user.setLastName(restUser.getLastname());
+            return new RestUser(userLocalService.updateUser(user));
+        } catch (PortalException e) {
+            log.info(e);
+            throw new NotFoundException(e);
+        }
+    }
+
 }
