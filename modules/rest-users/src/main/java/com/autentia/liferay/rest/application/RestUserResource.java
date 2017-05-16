@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @Component(immediate = true, service = RestUserResource.class) // Nuestro recurso es a su vez un componente de OSGi
 public class RestUserResource {
 
+    // Instancia del logger de Liferay para poder loggear información
     private static final Log log = LogFactoryUtil.getLog(RestUserResource.class);
 
     @Reference // Referencia al servicio de Liferay para usuarios
@@ -29,7 +30,7 @@ public class RestUserResource {
     }
 
     @GET
-    @Path("{id}")
+    @Path("{id}") // Anotación de JAX-RS que indica un parámetro por url (ej: users/1)
     public RestUser getUser(@PathParam("id") long id) {
         try {
             return new RestUser(userLocalService.getUserById(id));
@@ -75,6 +76,17 @@ public class RestUserResource {
         } catch (PortalException e) {
             log.info(e);
             throw new InternalServerErrorException(e);
+        }
+    }
+
+    @DELETE
+    @Path("{id}")
+    public RestUser deleteUser(@PathParam("id") long id) {
+        try {
+            return new RestUser(userLocalService.deleteUser(id));
+        } catch (PortalException e) {
+            log.info(e);
+            throw new NotFoundException(e);
         }
     }
 
