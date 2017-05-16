@@ -10,10 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @ApplicationPath("/users") // Indica a JAX-RS el endpoint de nuestro recurso
-@Component(immediate = true, service = Application.class) // Éstas son anotaciones de OSGi, que indican que nuestro módulo se tiene que cargar inmmediatamente e indica que es un servicio (?)
+@Component(immediate = true, service = Application.class)
 public class RestUsersApplication extends Application {
 
-	@Reference // Inyectamos nuestro recurso mediante una anotación de OSGi
+	@Reference // Inyectamos nuestra clase recurso mediante una anotación de OSGi
 	private RestUserResource restUserResource;
 
 	// Registramos nuestro servicio en OSGi
