@@ -1,11 +1,14 @@
 package com.autentia.liferay.rest.application;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +22,12 @@ public class RestUserResource {
     public List<RestUser> getUsers() {
         final List<User> users = userLocalService.getUsers(-1, -1);
         return users.stream().map(RestUser::new).collect(Collectors.toList());
+    }
+
+    @GET
+    @Path("{id}")
+    public RestUser getUser(@PathParam("id") long id) throws PortalException {
+        return new RestUser(userLocalService.getUserById(id));
     }
 
 }
