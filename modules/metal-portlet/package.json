@@ -1,0 +1,20 @@
+{
+  "name": "metal-portlet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "metal-component": "^2.4.5",
+    "metal-soy": "^2.4.5"
+  },
+  "devDependencies": {
+    "liferay-module-config-generator": "^1.1.10",
+    "metal-cli": "^1.3.1"
+  }
+}

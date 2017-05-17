@@ -1,3 +1,5 @@
 Bundle-Name: metal-portlet
 Bundle-SymbolicName: com.autentia.liferay.metal
 Bundle-Version: 1.0.0
+Include-Resource: package.json
+Require-Capability: soy;filter:="(type=metal)"
