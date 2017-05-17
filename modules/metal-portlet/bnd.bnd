@@ -1,5 +1,5 @@
-Bundle-Name: metal-portlet
-Bundle-SymbolicName: com.autentia.liferay.metal
+Bundle-Name: sample-soy
+Bundle-SymbolicName: sample-soy
 Bundle-Version: 1.0.0
 Include-Resource: package.json
 Require-Capability: soy;filter:="(type=metal)"

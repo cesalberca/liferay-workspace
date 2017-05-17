@@ -40,7 +40,7 @@ import java.io.IOException;
 	},
 	service = Portlet.class
 )
-public class MetalPortlet extends SoyPortlet {
+public class SampleSoyPortlet extends SoyPortlet {
 
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {

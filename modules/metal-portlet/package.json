@@ -1,14 +1,6 @@
 {
-  "name": "metal-portlet",
+  "name": "sample-soy",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "metal-component": "^2.4.5",
     "metal-soy": "^2.4.5"
