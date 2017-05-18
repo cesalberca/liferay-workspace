@@ -5,9 +5,14 @@ import Soy from 'metal-soy/src/Soy';
 import templates from './SoySample.soy';
 
 class SoySample extends Component {
-    donate(event) {
-        console.log("donate successful");
-    }
+	/**
+	 * donate to neil
+	 *
+	 * @param  {MouseEvent} event
+	 */
+	donate(event) {
+		console.log("donate successful");
+	 }
 }
 
 //Register component
