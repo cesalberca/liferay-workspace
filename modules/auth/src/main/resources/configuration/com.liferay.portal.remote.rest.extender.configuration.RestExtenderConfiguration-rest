@@ -1,0 +1,2 @@
+contextPaths=/auth
+jaxRsServiceFilterStrings=(component.name=com.autentia.liferay.rest.application.AuthApplication)
