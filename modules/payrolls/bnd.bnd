@@ -1,0 +1,6 @@
+Bundle-Name: payrolls
+Bundle-SymbolicName: com.autentia.liferay.rest.payrolls
+Bundle-Version: 1.0.0
+ConfigurationPath: /configuration
+Include-Resource: configuration=src/main/resources/configuration
+Import-Package: !com.sun.msv.*, !com.sun.xml.fastinfoset.*, !ju*
