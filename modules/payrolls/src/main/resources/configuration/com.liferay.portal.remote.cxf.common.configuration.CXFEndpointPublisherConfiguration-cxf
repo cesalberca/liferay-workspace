@@ -1,2 +1,2 @@
-contextPath=/payrolls
+contextPath=/hr
 authVerifierProperties=auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=*

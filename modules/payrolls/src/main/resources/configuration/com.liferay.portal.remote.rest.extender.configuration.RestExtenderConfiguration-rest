@@ -1,2 +1,2 @@
-contextPaths=/payrolls
+contextPaths=/hr
 jaxRsServiceFilterStrings=(component.name=com.autentia.liferay.rest.payrolls.application.PayrollsApplication)

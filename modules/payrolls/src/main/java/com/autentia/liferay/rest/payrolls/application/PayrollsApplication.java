@@ -1,31 +1,25 @@
 package com.autentia.liferay.rest.payrolls.application;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.POST;
 import javax.ws.rs.core.Application;
-import java.io.InputStream;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @ApplicationPath("/payrolls")
 @Component(immediate = true, service = Application.class)
 public class PayrollsApplication extends Application {
 
-    private static final Log log = LogFactoryUtil.getLog(PayrollsApplication.class);
+    @Reference
+    private PayrollsResource payrollsResource;
 
     @Override
     public Set<Object> getSingletons() {
-        return Collections.singleton(this);
+        super.getSingletons();
+        return new HashSet<>(Collections.singletonList(payrollsResource));
     }
 
-    @POST
-    public String postFile(@FormDataParam("file") InputStream file) {
-        log.info(file.toString());
-        return "It works!";
-    }
 }
